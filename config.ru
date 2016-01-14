@@ -15,18 +15,14 @@ class SlackDockerApp < Sinatra::Base
     title_link = "<#{docker['repository']['repo_url']}|#{docker['repository']['repo_name']}>"
 
     #push data
-    millis = "#{docker['push_data']['pushed_at']}"
-    secs = sec = (millis.to_f / 1000).to_s
+    secs = "#{docker['push_data']['pushed_at']}"
     date = Date.strptime(secs, '%s')
     
     user = "#{docker['push_data']['pusher']}"
     images = docker['push_data']['images']
 
 
-    body = "[#{title_link}] new image build uploaded successfully.\n
-            Changes pushed by #{user} on #{date}:\n
-            #{images.join("\n")}
-    "
+    body = "[#{title_link}] new image build uploaded successfully.\n Changes pushed by #{user} on #{date}:\n#{images.join("\n")}"
 
     slack = { text: body }
 
