@@ -17,6 +17,7 @@ class SlackDockerApp < Sinatra::Base
     #push data
     secs = "#{docker['push_data']['pushed_at']}"
     date = Date.strptime(secs, '%s')
+    time = Time.at(secs).utc.strftime("%H:%M:%S")
     
     user = "#{docker['push_data']['pusher']}"
     images = docker['push_data']['images']
